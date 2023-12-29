@@ -29,7 +29,8 @@ function App() {
         {list.map(function (item) {
           return (
             <li key={item.objectID}>
-              {item.title}
+              {item.title}, {item.author}, {item.num_comments}, {item.points},
+            <a target="blank" href={item.url}>{item.url}</a>
             </li>
           );
         })}
