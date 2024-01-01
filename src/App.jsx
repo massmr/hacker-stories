@@ -24,18 +24,34 @@ function App() {
     <div>
 
       <h1>Hacker Stories</h1>
-      
-      <ul>
-        {list.map(function (item) {
-          return (
-            <li key={item.objectID}>
-              {item.title}, {item.author}, {item.num_comments}, {item.points},
-            <a target="blank" href={item.url}>{item.url}</a>
-            </li>
-          );
-        })}
-      </ul>
 
+      <Search />
+      <List />     
+      
+    </div>
+  );
+}
+
+function List() {
+  return (
+    <ul>
+      {list.map(function (item) {
+        return (
+          <li key={item.objectID}>
+            {item.title}, {item.author}, {item.num_comments}, {item.points},
+            <a target="blank" href={item.url}>{item.url}</a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function Search() {
+  return(
+    <div>
+      <label htmlFor="search">Search :</label>
+      <input id="search" type="text" />
     </div>
   );
 }
