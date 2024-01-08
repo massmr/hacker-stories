@@ -22,44 +22,46 @@ const list = [
 const App = () => {
   return (
     <div>
-
       <h1>Hacker Stories</h1>
-
       <Search />
       <hr />
       <List /> 
-
     </div>
   );
 };
 
-const List = () => {
-  return (
-    <ul>
-      {list.map(function (item) {
-        return (
-          <li key={item.objectID}>
-            <span>{item.title}</span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-            <span>
-              <a target="blank" href={item.url}>{item.url}</a>
-            </span>
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
+const List = () => (
+  <ul>
+    {list.map((item) => {
+      return (
+        <li key={item.objectID}>
+          <span>{item.title}</span>
+          <span>{item.author}</span>
+          <span>{item.num_comments}</span>
+          <span>{item.points}</span>
+          <span>
+            <a target="blank" href={item.url}>{item.url}</a>
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+);
 
 const Search = () => {
-  return(
+  const handleChange = (event) => {
+    //synthetic event
+    console.log(event);
+    //value of target (here : input html element)
+    console.log(event.target.value);
+  };
+
+  return ( 
     <div>
       <label htmlFor="search">Search :</label>
-      <input id="search" type="text" />
+      <input id="search" type="text" onChange={handleChange}/>
     </div>
   );
-}
+};
 
 export default App;
