@@ -59,20 +59,21 @@ const List = ({ list }) => {
   return(
     <ul>
       {list.map((item) => (
-        <Item  key={item.objectID} item={item} />
+        //spread operator
+        <Item  key={item.objectID} {...item} />
       ))}
     </ul>
   );
 };
 
-const Item = ({ item }) => (
+const Item = ({ title, url, author, num_comments, points }) => (
   <li>
-    <span>{item.title}</span>
-    <span>{item.author}</span>
-    <span>{item.num_comments}</span>
-    <span>{item.points}</span>
+    <span>{title}</span>
+    <span>{author}</span>
+    <span>{num_comments}</span>
+    <span>{points}</span>
     <span>
-      <a target="blank" href={item.url}>{item.url}</a>
+      <a target="blank" href={url}>{url}</a>
     </span>
   </li>
 );
