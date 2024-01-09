@@ -55,35 +55,43 @@ const App = () => {
 
 //use of props as argument
 const List = (props) => {
+
   return(
-  <ul>
-    {props.list.map((item) => (
-      <Item  key={item.objectID} item={item} />
-    ))}
-  </ul>
-);
+    <ul>
+      {props.list.map((item) => (
+        <Item  key={item.objectID} item={item} />
+      ))}
+    </ul>
+  );
 };
 
 const Item = (props) => {
+  
   return (
-  <li>
-    <span>{props.item.title}</span>
-    <span>{props.item.author}</span>
-    <span>{props.item.num_comments}</span>
-    <span>{props.item.points}</span>
-    <span>
-      <a target="blank" href={props.item.url}>{props.item.url}</a>
-    </span>
-  </li>
-);
+    <li>
+      <span>{props.item.title}</span>
+      <span>{props.item.author}</span>
+      <span>{props.item.num_comments}</span>
+      <span>{props.item.points}</span>
+      <span>
+        <a target="blank" href={props.item.url}>{props.item.url}</a>
+      </span>
+    </li>
+  );
 };
 
 const Search = (props) => {
+  const { onSearch, search, searchedTerm } = props;
+  
   return ( 
     <div>
       <label htmlFor="search">Search :</label>
-      <input id="search" type="text" onChange={props.onSearch} value={props.search} />
-      <p>You are searching for : <strong>{props.searchedTerm()}</strong></p>
+      <input 
+        id="search" 
+        type="text" 
+        onChange={onSearch} 
+        value={search} />
+      <p>You are searching for : <strong>{searchedTerm()}</strong></p>
     </div>
   );
 };
