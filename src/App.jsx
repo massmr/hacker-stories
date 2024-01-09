@@ -54,32 +54,30 @@ const App = () => {
 };
 
 //use of props as argument
-const List = (props) => {
+const List = ({ list }) => {
 
   return(
     <ul>
-      {props.list.map((item) => (
+      {list.map((item) => (
         <Item  key={item.objectID} item={item} />
       ))}
     </ul>
   );
 };
 
-const Item = (props) => {
-  
-  return (
-    <li>
-      <span>{props.item.title}</span>
-      <span>{props.item.author}</span>
-      <span>{props.item.num_comments}</span>
-      <span>{props.item.points}</span>
-      <span>
-        <a target="blank" href={props.item.url}>{props.item.url}</a>
-      </span>
-    </li>
-  );
-};
+const Item = ({ item }) => (
+  <li>
+    <span>{item.title}</span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+    <span>
+      <a target="blank" href={item.url}>{item.url}</a>
+    </span>
+  </li>
+);
 
+//props handling inside function declaration 
 const Search = ({ onSearch, search, searchedTerm }) => ( 
   <div>
     <label htmlFor="search">Search :</label>
@@ -91,6 +89,5 @@ const Search = ({ onSearch, search, searchedTerm }) => (
     <p>You are searching for : <strong>{searchedTerm()}</strong></p>
   </div>
 );
-
 
 export default App;
