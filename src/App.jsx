@@ -27,7 +27,7 @@ const App = () => {
       <h1>Hacker Stories</h1>
       <Search />
       <hr />
-      <List list={stories}/> 
+      <List list={stories} /> 
     </div>
   );
 };
@@ -35,20 +35,22 @@ const App = () => {
 //use of props as argument
 const List = (props) => (
   <ul>
-    {props.list.map((item) => {
-      return (
-        <li key={item.objectID}>
-          <span>{item.title}</span>
-          <span>{item.author}</span>
-          <span>{item.num_comments}</span>
-          <span>{item.points}</span>
-          <span>
-            <a target="blank" href={item.url}>{item.url}</a>
-          </span>
-        </li>
-      );
-    })}
+    {props.list.map((item) => (
+      <Item  key={item.objectID} item={item} />
+    ))}
   </ul>
+);
+
+const Item = (props) => (
+  <li>
+    <span>{props.item.title}</span>
+    <span>{props.item.author}</span>
+    <span>{props.item.num_comments}</span>
+    <span>{props.item.points}</span>
+    <span>
+      <a target="blank" href={props.item.url}>{props.item.url}</a>
+    </span>
+  </li>
 );
 
 const Search = () => {
