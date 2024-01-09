@@ -2,8 +2,6 @@ import * as React from 'react';
 
 
 const App = () => {
-  console.log("App renders");
-
   const stories = [
     {
       title: 'React',
@@ -22,11 +20,16 @@ const App = () => {
       objectID: 1,
     }
   ];
+  
+  //callback handler
+  const handleSearch = (event) => {
+    console.log("callback handler : " + event.target.value);
+  };
 
   return (
     <div>
       <h1>Hacker Stories</h1>
-      <Search />
+      <Search onSearch={handleSearch} />
       <hr />
       <List list={stories} /> 
     </div>
@@ -35,7 +38,6 @@ const App = () => {
 
 //use of props as argument
 const List = (props) => {
-  console.log("List renders");
   return(
   <ul>
     {props.list.map((item) => (
@@ -46,7 +48,6 @@ const List = (props) => {
 };
 
 const Item = (props) => {
-  console.log("Item renders");
   return (
   <li>
     <span>{props.item.title}</span>
@@ -60,19 +61,19 @@ const Item = (props) => {
 );
 };
 
-const Search = () => {
-  console.log("Search renders");
-  
+const Search = (props) => {
   const [searchTerm, setSearchTerm] = React.useState(""); 
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
+    //callback handler
+    props.onSearch(event);
   };
 
   return ( 
     <div>
       <label htmlFor="search">Search :</label>
-      <input id="search" type="text" onChange={handleChange}/>
+      <input id="search" type="text" onBlur={handleChange}/>
       <p>Searching for : <strong>{searchTerm}</strong></p>
     </div>
   );
