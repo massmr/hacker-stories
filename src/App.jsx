@@ -80,20 +80,17 @@ const Item = (props) => {
   );
 };
 
-const Search = (props) => {
-  const { onSearch, search, searchedTerm } = props;
-  
-  return ( 
-    <div>
-      <label htmlFor="search">Search :</label>
-      <input 
-        id="search" 
-        type="text" 
-        onChange={onSearch} 
-        value={search} />
-      <p>You are searching for : <strong>{searchedTerm()}</strong></p>
-    </div>
-  );
-};
+const Search = ({ onSearch, search, searchedTerm }) => ( 
+  <div>
+    <label htmlFor="search">Search :</label>
+    <input 
+      id="search" 
+      type="text" 
+      onChange={onSearch} 
+      value={search} />
+    <p>You are searching for : <strong>{searchedTerm()}</strong></p>
+  </div>
+);
+
 
 export default App;
