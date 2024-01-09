@@ -54,17 +54,15 @@ const App = () => {
 };
 
 //use of props as argument
-const List = ({ list }) => {
-
-  return(
-    <ul>
-      {list.map((item) => (
-        //spread operator
-        <Item  key={item.objectID} {...item} />
-      ))}
-    </ul>
-  );
-};
+const List = ({ list }) => (
+  //rest operator (use objectID and separate the rest)
+  <ul>
+    {list.map(({ objectID, ...item }) => (
+      //spread operator (spread all the item object)
+      <Item  key={objectID} {...item} />
+    ))}
+  </ul>
+);
 
 const Item = ({ title, url, author, num_comments, points }) => (
   <li>
