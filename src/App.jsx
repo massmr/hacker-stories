@@ -1,5 +1,17 @@
 import * as React from 'react';
 
+//custom hook
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
 
 const App = () => {
   const stories = [
@@ -21,7 +33,10 @@ const App = () => {
     }
   ];
   
-  const [searchTerm, setSearchTerm] = React.useState('React');
+  const [searchTerm, setSearchTerm] = useStorageState(
+    'search',
+    'Hello World'
+  );
 
   //callback handler
   const handleSearch = (event) => {
@@ -53,27 +68,23 @@ const App = () => {
   );
 };
 
-//use of props as argument
-const List = ({ list }) => (
-  //rest operator (use objectID and separate the rest)
+const List = ({ list }) => ( 
   <ul>
-    {list.map(({ objectID, ...item }) => (
-      //spread operator (spread all the item object)
-      <Item  key={objectID} {...item} />
+    {list.map((item) => (
+      <Item key={item.objectID} item={item} />
     ))}
-  </ul>
+  </ul> 
 );
 
-const Item = ({ title, url, author, num_comments, points }) => (
+const Item = ({ item }) => ( 
   <li>
-    <span>{title}</span>
-    <span>{author}</span>
-    <span>{num_comments}</span>
-    <span>{points}</span>
     <span>
-      <a target="blank" href={url}>{url}</a>
+      <a href={item.url}>{item.title}</a>
     </span>
-  </li>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
+  </li> 
 );
 
 //props handling inside function declaration 
