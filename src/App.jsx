@@ -35,7 +35,7 @@ const App = () => {
   
   const [searchTerm, setSearchTerm] = useStorageState(
     'search',
-    'Hello World'
+    'React'
   );
 
   //callback handler
@@ -89,7 +89,7 @@ const Item = ({ item }) => (
 
 //props handling inside function declaration 
 const Search = ({ onSearch, search, searchedTerm }) => ( 
-  <div>
+  <>
     <label htmlFor="search">Search :</label>
     <input 
       id="search" 
@@ -97,7 +97,7 @@ const Search = ({ onSearch, search, searchedTerm }) => (
       onChange={onSearch} 
       value={search} />
     <p>You are searching for : <strong>{searchedTerm()}</strong></p>
-  </div>
+  </>
 );
 
 export default App;
