@@ -58,8 +58,14 @@ const App = () => {
 
       <h1>Hacker Stories</h1>
       
-      <Search search={searchTerm} onSearch={handleSearch} searchedTerm={searchedTerm} />
-      
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value={searchTerm} 
+        onInputChange={handleSearch} 
+        searchedTerm={searchedTerm} 
+      />
+        
       <hr />
       
       <List list={searchedStories} /> 
@@ -88,14 +94,15 @@ const Item = ({ item }) => (
 );
 
 //props handling inside function declaration 
-const Search = ({ onSearch, search, searchedTerm }) => ( 
+const InputWithLabel = ({ id, label, value, type='text', onInputChange, searchedTerm }) => ( 
   <>
-    <label htmlFor="search">Search :</label>
+    <label htmlFor={id}>{label}</label>
+    &nbsp;
     <input 
-      id="search" 
-      type="text" 
-      onChange={onSearch} 
-      value={search} />
+      id={id} 
+      type={type} 
+      onChange={onInputChange} 
+      value={value} />
     <p>You are searching for : <strong>{searchedTerm()}</strong></p>
   </>
 );
