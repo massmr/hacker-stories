@@ -64,7 +64,9 @@ const App = () => {
         value={searchTerm} 
         onInputChange={handleSearch} 
         searchedTerm={searchedTerm} 
-      />
+      >
+        <strong>Search :</strong>
+      </InputWithLabel> 
         
       <hr />
       
@@ -94,9 +96,9 @@ const Item = ({ item }) => (
 );
 
 //props handling inside function declaration 
-const InputWithLabel = ({ id, label, value, type='text', onInputChange, searchedTerm }) => ( 
+const InputWithLabel = ({ id, value, type='text', onInputChange, children, searchedTerm }) => ( 
   <>
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>{children}</label>
     &nbsp;
     <input 
       id={id} 
