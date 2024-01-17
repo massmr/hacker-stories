@@ -1,5 +1,24 @@
 import * as React from 'react';
 
+const initialStories = [
+    {
+      title: 'React',
+      url: 'https://reactjs.org/',
+      author: 'Jordan Walke',
+      num_comments: 3,
+      points: 4,
+      objectID: 0,
+    }, 
+    {
+      title: 'Redux',
+      url: 'https://redux.js.org/',
+      author: 'Dan Abramov, Andrew Clark',
+      num_comments: 2,
+      points: 5,
+      objectID: 1,
+    }
+  ];
+
 //custom hook :
   //is used for => SearchTerm
 const useStorageState = (key, initialState) => {
@@ -21,25 +40,20 @@ const useStorageState = (key, initialState) => {
 //App is the main component
 const App = () => {
 
-  //this is only data
-  const stories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    }, 
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    }
-  ];
+  //items are in global scope
+  //here is only a state of items
+  //real Sories wont be altered in any way
+  const [stories, setStories] = React.useState(initialStories);
+
+  //callback handler to dismiss an item
+  //make a new Stories array filtering with objectID
+  const handleRemoveStory = (item) => {
+    const newStories = stories.filter(
+      (story) => item.objectID !== story.objectID
+    );
+
+    setStories(newStories);
+  };
   
   //usage of the custom hook
   const [searchTerm, setSearchTerm] = useStorageState(
@@ -74,28 +88,37 @@ const App = () => {
         
       <hr />
       
-      <List list={searchedStories} /> 
+      <List list={searchedStories} onRemoveItem={handleRemoveStory} /> 
 
     </div>
   );
 };
 
-const List = ({ list }) => ( 
+const List = ({ list, onRemoveItem }) => ( 
   <ul>
     {list.map((item) => (
-      <Item key={item.objectID} item={item} />
+      <Item key={item.objectID} 
+            item={item} 
+            onRemoveItem={onRemoveItem}
+      />
     ))}
   </ul> 
 );
 
-const Item = ({ item }) => ( 
+//onRemoveItem is the callbackhandler and triggers the filtering
+const Item = ({ item, onRemoveItem }) => ( 
   <li>
     <span>
       <a href={item.url}>{item.title}</a>
     </span>
-    <span>{item.author}</span>
+     <span>{item.author}</span>
     <span>{item.num_comments}</span>
     <span>{item.points}</span>
+    <span>
+      <button type="button" onClick={() => onRemoveItem(item)}>
+        Dismiss
+      </button>
+    </span>
   </li> 
 );
 
