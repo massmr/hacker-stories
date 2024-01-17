@@ -1,11 +1,16 @@
 import * as React from 'react';
 
-//custom hook
+//custom hook :
+  //is used for => SearchTerm
 const useStorageState = (key, initialState) => {
+  //Set a state for value : 
+    //check if there is a localStorage for key
+    //if not, use initial state
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
 
+  //Check for any change in value, key
   React.useEffect(() => {
     localStorage.setItem(key, value);
   }, [value, key]);
@@ -13,7 +18,10 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
+//App is the main component
 const App = () => {
+
+  //this is only data
   const stories = [
     {
       title: 'React',
@@ -33,25 +41,21 @@ const App = () => {
     }
   ];
   
+  //usage of the custom hook
   const [searchTerm, setSearchTerm] = useStorageState(
     'search',
     'React'
   );
 
-  //callback handler
+  //callback handler, its purpose is to use it in child components
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
   
-  //array resulting from the filter => pass data to any child
+  //used to filter list items, works with lowercase => will be passed as props
   const searchedStories = stories.filter(function (story) {
     return story.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
-
-  //function resulting => pass the state to any child
-  const searchedTerm = (term) => {
-    return searchTerm;
-  };
 
   return (
     <div>
@@ -63,7 +67,7 @@ const App = () => {
         label="Search"
         value={searchTerm} 
         onInputChange={handleSearch} 
-        searchedTerm={searchedTerm} 
+        isFocused
       >
         <strong>Search :</strong>
       </InputWithLabel> 
@@ -96,17 +100,28 @@ const Item = ({ item }) => (
 );
 
 //props handling inside function declaration 
-const InputWithLabel = ({ id, value, type='text', onInputChange, children, searchedTerm }) => ( 
-  <>
-    <label htmlFor={id}>{children}</label>
-    &nbsp;
-    <input 
-      id={id} 
-      type={type} 
-      onChange={onInputChange} 
-      value={value} />
-    <p>You are searching for : <strong>{searchedTerm()}</strong></p>
-  </>
-);
+const InputWithLabel = ({ id, value, type='text', onInputChange, isFocused, children }) => {
+  
+  const inputRef = React.useRef();
+  
+  React.useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isFocused]);
+
+  return ( 
+    <>
+      <label htmlFor={id}>{children}</label>
+      &nbsp;
+      <input
+        ref={inputRef}
+        id={id} 
+        type={type} 
+        onChange={onInputChange} 
+        value={value} />
+    </>
+  );
+}
 
 export default App;
